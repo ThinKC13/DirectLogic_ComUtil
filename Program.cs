@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AutomationDirectComDriver
 {
@@ -34,8 +36,14 @@ namespace AutomationDirectComDriver
             }
             else
             {
-                DisplayHelp();
+                //DisplayHelp();
+                string jsonString = File.ReadAllText(".\\devicedata.json");
+                DeviceManager device = JsonSerializer.Deserialize<DeviceManager>(jsonString);
+                log.Info(device.DeviceList[0].MemoryData.Count.ToString());
+                
             }
+
+
         }
 
         private static bool HelpRequired(string param)

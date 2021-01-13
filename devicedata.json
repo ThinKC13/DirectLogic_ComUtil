@@ -1,0 +1,142 @@
+{
+  "DeviceType": "PLC",
+  "DeviceList": [
+    {
+      "DeviceName": "DL06",
+      "MemoryData": [
+        {
+          "Memory Type": "Inputs",
+          "Memory Format": "Discrete",
+          "Qty": 512,
+          "PLC Range": "X0-X777",
+          "Letter": "X",
+          "Start Address": 2048,
+          "End Address": 2559,
+          "Data Type": "Input"
+        },
+        {
+          "Memory Type": "Special Relays",
+          "Memory Format": "Discrete",
+          "Qty": 512,
+          "PLC Range": "SP0-SP777",
+          "Letter": "SP",
+          "Start Address": 3072,
+          "End Address": 3583,
+          "Data Type": "Input"
+        },
+        {
+          "Memory Type": "Outputs",
+          "Memory Format": "Discrete",
+          "Qty": 512,
+          "PLC Range": "Y0-Y777",
+          "Letter": "Y",
+          "Start Address": 2048,
+          "End Address": 2559,
+          "Data Type": "Coil"
+        },
+        {
+          "Memory Type": "Control Relays",
+          "Memory Format": "Discrete",
+          "Qty": 1024,
+          "PLC Range": "C0-C1777",
+          "Letter": "C",
+          "Start Address": 3072,
+          "End Address": 4095,
+          "Data Type": "Coil"
+        },
+        {
+          "Memory Type": "Timer Contacts",
+          "Memory Format": "Discrete",
+          "Qty": 256,
+          "PLC Range": "T0-T377",
+          "Letter": "Y",
+          "Start Address": 6144,
+          "End Address": 6399,
+          "Data Type": "Coil"
+        },
+        {
+          "Memory Type": "Counter Contacts",
+          "Memory Format": "Discrete",
+          "Qty": 128,
+          "PLC Range": "CT0-CT177",
+          "Letter": "CT",
+          "Start Address": 6400,
+          "End Address": 6527,
+          "Data Type": "Coil"
+        },
+        {
+          "Memory Type": "Stage Status Bits",
+          "Memory Format": "Discrete",
+          "Qty": 1024,
+          "PLC Range": "S0-S1777",
+          "Letter": "S",
+          "Start Address": 5120,
+          "End Address": 6143,
+          "Data Type": "Coil"
+        },
+        {
+          "Memory Type": "Global Inputs",
+          "Memory Format": "Discrete",
+          "Qty": 2048,
+          "PLC Range": "GX0-GX3777",
+          "Letter": "GX",
+          "Start Address": 0,
+          "End Address": 2047,
+          "Data Type": "Input"
+        },
+        {
+          "Memory Type": "Global Outputs",
+          "Memory Format": "Discrete",
+          "Qty": 2048,
+          "PLC Range": "GY0-GY3777",
+          "Letter": "GY",
+          "Start Address": 0,
+          "End Address": 2047,
+          "Data Type": "Coil"
+        },
+        {
+          "Memory Type": "Timer Current Values",
+          "Memory Format": "Word",
+          "Qty": 128,
+          "PLC Range": "V0-V177",
+          "Letter": "V",
+          "Start Address": 0,
+          "End Address": 127,
+          "Data Type": "Input Register"
+        },
+        {
+          "Memory Type": "Counter Current Values",
+          "Memory Format": "Word",
+          "Qty": 128,
+          "PLC Range": "V1000-V11777",
+          "Letter": "V",
+          "Start Address": 512,
+          "End Address": 639,
+          "Data Type": "Input Register"
+        },
+        {
+          "Memory Type": "Counter Current Values",
+          "Memory Format": "Word",
+          "Qty": 128,
+          "PLC Range": "V1000-V11777",
+          "Letter": "V",
+          "Start Address": 512,
+          "End Address": 639,
+          "Data Type": "Input Register"
+        },
+        {
+          "Memory Type": "V-Memory",
+          "Memory Format": "Word",
+          "Qty": 7424,
+          "PLC Range": "V400-V677, V1400-V7377, V10000-V17777, ",
+          "Letter": "V",
+          "Start Address": 0,
+          "End Address": 8191,
+          "Data Type": "Holding Register"
+        }
+      ]
+    },
+
+    { "DeviceName": "D260" }
+  ]
+}
