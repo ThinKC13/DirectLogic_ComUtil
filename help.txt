@@ -1,0 +1,8 @@
+--HELP-- AutomationDirect Communication Driver 
+----------------------------------------------
+Currently under development. Modbus TCP and read only functions available.
+
+FORMAT
+	[Protocol] [IP] [Port] [Device Address] [CPU] [Register]
+
+--END--
