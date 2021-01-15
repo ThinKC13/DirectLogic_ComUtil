@@ -4,8 +4,6 @@ using System;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace AutomationDirectComDriver
 {
@@ -13,6 +11,7 @@ namespace AutomationDirectComDriver
     {
         // Initialize logger
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        static bool debug = true;
 
         static void Main(string[] args)
         {
@@ -21,7 +20,7 @@ namespace AutomationDirectComDriver
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
             // debug for number of input arguments
-            log.Debug("Arguments: " + args.Length.ToString());
+            if (debug) { log.Debug("Recieved Arguments: " + args.Length.ToString()); }
 
             // check if asking for help
             if (args.Length == 0 || (args.Length == 1 && HelpRequired(args[0])))
@@ -36,11 +35,7 @@ namespace AutomationDirectComDriver
             }
             else
             {
-                //DisplayHelp();
-                string jsonString = File.ReadAllText(".\\devicedata.json");
-                DeviceManager device = JsonSerializer.Deserialize<DeviceManager>(jsonString);
-                log.Info(device.DeviceList[0].MemoryData.Count.ToString());
-                
+                DisplayHelp();
             }
 
 
@@ -63,19 +58,40 @@ namespace AutomationDirectComDriver
 
         private static void ModbusParser(string[] args)
         {
-            if (args.Length == 4)
+            if (args.Length == 5)
             {
-                //IPAddress iPAddress = new IPAddress(null);
-                bool validIP = IPAddress.TryParse(args[1], out IPAddress iPAddress);
-                bool validPORT = Int32.TryParse(args[2], out int port);
-                bool validDevAddr = Int32.TryParse(args[3], out int deviceAddress);
+                // organize command line arguments
+                string IPString = args[1];
+                string portString = args[2];
+                string deviceAddrString = args[3];
+                string deviceName = args[4];
+                
+                // check valid Ip address, port and device address 
+                bool validIP = IPAddress.TryParse(IPString, out IPAddress iPAddress);
 
-                log.Info("To be implemented...");
+                // (port must be less that 65536)
+                bool validPort = Int32.TryParse(portString, out int port);
+                if (validPort) { validPort = validPort && port < 65536; }
+
+                // (modbus device address can't be more than 247)
+                bool validDevAddr = Int32.TryParse(deviceAddrString, out int deviceAddress);
+                if (validDevAddr) { validDevAddr = validDevAddr && deviceAddress <= 247; }
+
+                // check if device and PLC address are valid
+                DeviceDataInterface deviceData = new DeviceDataInterface();
+                bool validDevice = deviceData.ValidDevice(deviceName);
+                
+                // log issues
+                if (!validIP) { log.Error(IPString + " is not a valid IP Address"); }
+                if (!validPort) { log.Error(portString + " is not a valid Port Number. Modbus is generally 502."); }
+                if (!validDevAddr) { log.Error(deviceAddrString + " is not a valid device address."); }
+                if (!validDevice) { log.Error(deviceName + " is not a valid Device."); }
+                
 
             }
             else
             {
-                log.Warn("Improper Modbus TCP format. Not enough arguments.");
+                log.Error("Improper Modbus TCP format. Please check help file with -h.");
             }
         }
 
