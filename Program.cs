@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using AMWD.Modbus.Tcp;
+using AMWD.Modbus.Tcp.Client;
 
 namespace AutomationDirectComDriver
 {
@@ -11,9 +13,9 @@ namespace AutomationDirectComDriver
     {
         // Initialize logger
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        static bool debug = true;
+        static readonly bool debug = true;
 
-        static void Main(string[] args)
+        static async System.Threading.Tasks.Task Main(string[] args)
         {
             // Load configuration for logger (file and colored console)
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -21,6 +23,22 @@ namespace AutomationDirectComDriver
 
             // debug for number of input arguments
             if (debug) { log.Debug("Recieved Arguments: " + args.Length.ToString()); }
+
+        
+            DirectLogic_PLC.DL06 dl06 = new DirectLogic_PLC.DL06();
+            log.Info("CPU Name = " + dl06.CPUName);
+            log.Info("Input Qty = " + dl06.Inputs.Qty.ToString());
+
+            ModbusClient modbus = new ModbusClient(IPAddress.Parse("127.0.0.1"));
+            await modbus.Connect();
+            var coils = await modbus.ReadCoils(0, 0, 1);
+
+            
+            foreach (var coil in coils)
+            {
+                log.Info("Coil: " + coil.BoolValue.ToString());
+            }
+            
 
             // check if asking for help
             if (args.Length == 0 || (args.Length == 1 && HelpRequired(args[0])))
@@ -31,7 +49,7 @@ namespace AutomationDirectComDriver
             // Parse communication type
             else if (args[0] == "mtcp")
             {
-                ModbusParser(args);
+                ModbusParser(args);                
             }
             else
             {

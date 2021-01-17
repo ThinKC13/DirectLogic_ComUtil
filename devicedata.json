@@ -54,7 +54,7 @@
           "Qty": 256,
           "PLCRangeStart": 0,
           "PLCRangeEnd": 377,
-          "Letter": "Y",
+          "Letter": "T",
           "StartAddress": 6144,
           "EndAddress": 6399,
           "DatType": "Coil"
